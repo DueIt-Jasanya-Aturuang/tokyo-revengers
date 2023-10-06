@@ -10,11 +10,13 @@ import (
 
 	"github.com/graphql-go/handler"
 
+	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/infra"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/query"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/repository"
 )
 
 func main() {
+	infra.InitEnv()
 	repo := repository.NewAllServiceRepoImpl()
 	schemaConfig := graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
@@ -43,6 +45,7 @@ func main() {
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), "headers", r.Header)
 		r = r.WithContext(ctx)
+		w.Header().Set("Authorization", r.Header.Get("Authorization"))
 		httpHandler.ServeHTTP(w, r)
 	}))
 	log.Print("ready: listening...\n")

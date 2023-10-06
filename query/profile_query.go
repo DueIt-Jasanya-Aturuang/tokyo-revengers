@@ -11,12 +11,18 @@ import (
 
 func GetProfile(profileRepo *repository.ProfileRepositoryImpl) *graphql.Field {
 	return &graphql.Field{
-		Type: types.ProfileType,
+		Type: types.Response,
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			var profile types.Profile
 			header := p.Context.Value("headers").(http.Header)
-			profile.ProfileID = profileRepo.Hello(header.Get("asd"))
-			return profile, nil
+			resp, err := profileRepo.GetProfile(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+				ApiKey:        header.Get("X-Api-Key"),
+			})
+
+			return resp, err
 		},
 	}
 }

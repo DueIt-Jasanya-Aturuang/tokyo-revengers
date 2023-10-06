@@ -2,6 +2,7 @@ package infra
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -11,4 +12,10 @@ func InitEnv() {
 	if err != nil {
 		log.Fatalf("failed load env | err : %v", err)
 	}
+
+	AccountUrl = os.Getenv("ACCOUNT_URL")
 }
+
+var (
+	AccountUrl string
+)
