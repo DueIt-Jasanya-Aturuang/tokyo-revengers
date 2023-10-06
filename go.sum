@@ -1,0 +1,8 @@
+github.com/graphql-go/graphql v0.8.1 h1:p7/Ou/WpmulocJeEx7wjQy611rtXGQaAcXGqanuMMgc=
+github.com/graphql-go/graphql v0.8.1/go.mod h1:nKiHzRM0qopJEwCITUuIsxk9PlVlwIiiI8pnJEhordQ=
+github.com/graphql-go/handler v0.2.3 h1:CANh8WPnl5M9uA25c2GBhPqJhE53Fg0Iue/fRNla71E=
+github.com/graphql-go/handler v0.2.3/go.mod h1:leLF6RpV5uZMN1CdImAxuiayrYYhOk33bZciaUGaXeU=
+github.com/jasanya-tech/jasanya-response-backend-golang v0.0.0-20230920200656-1b281f294ef9 h1:DiElB0RRiKzcYZWtqcvnMm7TtJCtzQZJnfjBcvEvlvI=
+github.com/jasanya-tech/jasanya-response-backend-golang v0.0.0-20230920200656-1b281f294ef9/go.mod h1:2yxOaJz7o7fmOuaP1Mq6pzNSagTlYM10TctUMhaROk8=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
