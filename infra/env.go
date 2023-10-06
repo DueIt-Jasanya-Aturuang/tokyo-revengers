@@ -14,8 +14,22 @@ func InitEnv() {
 	}
 
 	AccountUrl = os.Getenv("ACCOUNT_URL")
+	AuthUrl = os.Getenv("AUTH_URL")
+	FinanceUrl = os.Getenv("FINANCE_URL")
+
+	AccountKey = os.Getenv("ACCOUNT_KEY")
+	AuthKey = os.Getenv("AUTH_KEY")
+	FinanceKey = os.Getenv("FINANCE_KEY")
 }
 
 var (
 	AccountUrl string
+	AuthUrl    string
+	FinanceUrl string
+)
+
+var (
+	AccountKey string
+	AuthKey    string
+	FinanceKey string
 )

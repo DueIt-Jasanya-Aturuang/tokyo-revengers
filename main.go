@@ -17,6 +17,8 @@ import (
 
 func main() {
 	infra.InitEnv()
+	infra.LogInit()
+
 	repo := repository.NewAllServiceRepoImpl()
 	schemaConfig := graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{

@@ -4,18 +4,6 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-type User struct {
-	ID          string  `json:"id"`
-	FullName    string  `json:"full_name"`
-	Gender      string  `json:"gender"`
-	Image       string  `json:"image"`
-	Username    string  `json:"username"`
-	Email       string  `json:"email"`
-	EmailFormat string  `json:"email_format"`
-	PhoneNumber *string `json:"phone_number"`
-	Activited   bool    `json:"activited"`
-}
-
 var UserType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "User",
 	Fields: graphql.Fields{

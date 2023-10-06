@@ -2,22 +2,24 @@ package repository
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
+	"github.com/rs/zerolog/log"
+
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/infra"
+	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/util"
 )
 
-type ProfileRepositoryImpl struct {
+type AccountRepositoryImpl struct {
 }
 
-func (p *ProfileRepositoryImpl) GetProfile(header *Header) (map[string]any, error) {
+func (p *AccountRepositoryImpl) GetProfile(header *Header) (map[string]any, error) {
 	route := fmt.Sprintf("%s/account/profile", infra.AccountUrl)
 
 	request, err := http.NewRequest("GET", route, nil)
 	if err != nil {
-		log.Fatalf("failed create request | err : %v", err)
+		log.Warn().Msgf(util.LogErrHttpNewRequest, err)
 		return nil, err
 	}
 
@@ -25,7 +27,7 @@ func (p *ProfileRepositoryImpl) GetProfile(header *Header) (map[string]any, erro
 	request.Header.Set("App-ID", header.AppID)
 	request.Header.Set("Profile-ID", header.ProfileID)
 	request.Header.Set("Authorization", header.Authorization)
-	request.Header.Set("X-Api-Key", header.ApiKey)
+	request.Header.Set("X-Api-Key", infra.AccountKey)
 
 	client := http.Client{
 		Timeout: 5 * time.Second,
@@ -33,12 +35,12 @@ func (p *ProfileRepositoryImpl) GetProfile(header *Header) (map[string]any, erro
 
 	response, err := client.Do(request)
 	if err != nil {
-		log.Fatalf("failed cliend do | err : %v", err)
+		log.Warn().Msgf(util.LogErrClientDo, err)
 		return nil, err
 	}
 	defer func() {
 		if errBody := response.Body.Close(); errBody != nil {
-			log.Fatalf("failed close response body | err : %v", err)
+			log.Warn().Msgf(util.LogErrClientDoClose, err)
 		}
 	}()
 

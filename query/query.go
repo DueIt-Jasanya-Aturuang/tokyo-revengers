@@ -7,10 +7,10 @@ import (
 )
 
 func GetRootFields(
-	profile *repository.AllServiceRepoImpl,
+	repo *repository.AllServiceRepoImpl,
 ) graphql.Fields {
 	return graphql.Fields{
-		"getProfile": GetProfile(profile.Profile),
-		"user":       GetUser(),
+		"getProfile": GetProfile(repo.Profile),
+		"getUser":    GetUser(repo.User),
 	}
 }
