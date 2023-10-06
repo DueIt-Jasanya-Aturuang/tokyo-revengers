@@ -20,6 +20,7 @@ func InitEnv() {
 	AccountKey = os.Getenv("ACCOUNT_KEY")
 	AuthKey = os.Getenv("AUTH_KEY")
 	FinanceKey = os.Getenv("FINANCE_KEY")
+	Key = os.Getenv("KEY")
 }
 
 var (
@@ -32,4 +33,5 @@ var (
 	AccountKey string
 	AuthKey    string
 	FinanceKey string
+	Key        string
 )
