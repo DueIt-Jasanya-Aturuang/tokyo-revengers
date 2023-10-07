@@ -18,5 +18,6 @@ func GetRootFields(
 		"GetDetailSpendingTypeByID":          GetDetailSpendingType(repo.Finance),
 		"GetAllIncomeTypeByInfiniteScroll":   GetIncomeType(repo.Finance),
 		"GetDetailIncomeTypeByID":            GetDetailIncomeType(repo.Finance),
+		"GetBalance":                         GetBalance(repo.Finance),
 	}
 }

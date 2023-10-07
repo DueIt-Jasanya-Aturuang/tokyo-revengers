@@ -184,3 +184,30 @@ func GetDetailIncomeType(finance *repository.FinanceRepositoryImpl) *graphql.Fie
 		},
 	}
 }
+func GetBalance(finance *repository.FinanceRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.BalanceType, "BalanceResponse"),
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+
+			resp, err := finance.GetBalance(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			})
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
