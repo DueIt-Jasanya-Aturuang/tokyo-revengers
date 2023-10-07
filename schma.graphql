@@ -1,0 +1,98 @@
+# Tipe Enum untuk OrderParamEnum
+enum OrderParamEnum {
+  DESC
+  ASC
+}
+
+# Tipe Enum untuk ProfileConfigEnum
+enum ProfileConfigEnum {
+  MONTHLY_PERIOD
+  DAILY_NOTIFY
+  # Tambahkan bidang lain yang Anda butuhkan di sini
+}
+
+# Tipe objek untuk PaymentList
+type PaymentList {
+  id: String
+  profile_id: String
+  name: String
+  description: String
+  image: String
+}
+
+# Tipe objek untuk PaymentType
+type PaymentType {
+  payments: [PaymentList]
+  cursor: String
+}
+
+# Tipe objek untuk ProfileConfigType
+type ProfileConfigType {
+  profile_config_id: String
+  profile_id: String
+  config_name: String
+  config_value: String
+  status: String
+  token: String
+  days: [String]
+}
+
+# Tipe objek untuk ProfileType
+type ProfileType {
+  profile_id: String
+  quote: String
+  profesi: String
+}
+
+# Tipe objek untuk SpendingTypeList
+type SpendingTypeList {
+  id: String
+  profile_id: String
+  title: String
+  maximum_limit: Int
+  format_maximum_limit: String
+  icon: String
+  used: Int
+  format_used: String
+  persentase_used: String
+}
+
+# Tipe objek untuk SpendingTypeType
+type SpendingTypeType {
+  spending_type: [SpendingTypeList]
+  cursor: String
+  budget_amount: Int
+  format_budget_amount: String
+}
+
+# Tipe objek untuk UserType
+type UserType {
+  id: Int
+  full_name: String
+  gender: String
+  image: String
+  username: String
+  email: String
+  email_format: String
+  phone_number: String
+  activited: Boolean
+}
+
+scalar JSON
+
+# Tipe objek untuk Response
+type Response {
+  data: JSON
+  status: String
+  message: String
+  errors: JSON
+}
+
+# Operasi-query
+type Query {
+  GetDetailProfile: Response
+  GetDetailUser: Response
+  GetDetailProfileConfig(config_name: ProfileConfigEnum = MONTHLY_PERIOD): Response
+  GetAllPaymentByInfiniteScroll(order: OrderParamEnum = ASC, cursor: String): Response
+  GetAllSpendingTypeByInfiniteScroll(order: OrderParamEnum = ASC, cursor: String, periode: Boolean = false, config_name: String = "MONTHLY_PERIOD"): Response
+}

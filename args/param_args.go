@@ -29,3 +29,10 @@ var InfiniteScroll = graphql.FieldConfigArgument{
 		Description:  "",
 	},
 }
+
+var OrderInfiniteScroll = InfiniteScroll["order"]
+var CursorInfiniteScroll = InfiniteScroll["cursor"]
+var PeriodeBool = &graphql.ArgumentConfig{
+	Type:         graphql.Boolean,
+	DefaultValue: false,
+}

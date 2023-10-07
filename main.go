@@ -2,15 +2,18 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
+	"github.com/jasanya-tech/jasanya-response-backend-golang/response"
 	"github.com/rs/zerolog/log"
 
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/infra"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/query"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/repository"
+	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/util"
 )
 
 func main() {
@@ -35,20 +38,20 @@ func main() {
 	})
 
 	http.Handle("/page", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// if r.Header.Get("X-Api-Key") != infra.Key {
-		// 	httpResp := response.HttpResponse{
-		// 		Status:  response.CM05,
-		// 		Message: "forbidden",
-		// 		Errors:  "invalid api key page",
-		// 		Data:    nil,
-		// 	}
-		//
-		// 	w.WriteHeader(403)
-		// 	if errEncode := json.NewEncoder(w).Encode(httpResp); errEncode != nil {
-		// 		log.Err(errEncode).Msgf(util.LogErrEncode, httpResp, errEncode)
-		// 	}
-		// 	return
-		// }
+		if r.Header.Get("X-Api-Key") != infra.Key {
+			httpResp := response.HttpResponse{
+				Status:  response.CM05,
+				Message: "forbidden",
+				Errors:  "invalid api key page",
+				Data:    nil,
+			}
+
+			w.WriteHeader(403)
+			if errEncode := json.NewEncoder(w).Encode(httpResp); errEncode != nil {
+				log.Err(errEncode).Msgf(util.LogErrEncode, httpResp, errEncode)
+			}
+			return
+		}
 
 		ctxHeaders := context.WithValue(r.Context(), "headers", r.Header)
 		r = r.WithContext(ctxHeaders)
