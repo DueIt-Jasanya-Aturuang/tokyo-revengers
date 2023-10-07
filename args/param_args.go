@@ -20,7 +20,7 @@ var OrderParamEnum = graphql.NewEnum(graphql.EnumConfig{
 var InfiniteScroll = graphql.FieldConfigArgument{
 	"order": &graphql.ArgumentConfig{
 		Type:         OrderParamEnum,
-		DefaultValue: "asc",
+		DefaultValue: "desc",
 		Description:  "Input order by data, by default DESC",
 	},
 	"cursor": &graphql.ArgumentConfig{
