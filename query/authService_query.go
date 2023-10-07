@@ -12,7 +12,7 @@ import (
 
 func GetUser(userRepo *repository.AuthRepositoryImpl) *graphql.Field {
 	return &graphql.Field{
-		Type: types.Response(types.UserType, "userResponse"),
+		Type: types.Response(types.UserType, "UserResponse"),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			header := p.Context.Value("headers").(http.Header)
 

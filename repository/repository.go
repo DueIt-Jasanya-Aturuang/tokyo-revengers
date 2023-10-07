@@ -19,12 +19,14 @@ type Header struct {
 type AllServiceRepoImpl struct {
 	Profile *AccountRepositoryImpl
 	User    *AuthRepositoryImpl
+	Finance *FinanceRepositoryImpl
 }
 
 func NewAllServiceRepoImpl() *AllServiceRepoImpl {
 	return &AllServiceRepoImpl{
 		Profile: &AccountRepositoryImpl{},
 		User:    &AuthRepositoryImpl{},
+		Finance: &FinanceRepositoryImpl{},
 	}
 }
 
@@ -42,6 +44,6 @@ func FetchResponse(r *http.Response) map[string]any {
 		log.Warn().Msgf(util.LogErrDecode, r.Body, err)
 		return ResponseGateway
 	}
-	
+
 	return resMap
 }

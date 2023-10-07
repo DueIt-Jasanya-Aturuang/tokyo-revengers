@@ -22,6 +22,9 @@ var ProfileConfigType = graphql.NewObject(graphql.ObjectConfig{
 		"status": &graphql.Field{
 			Type: graphql.String,
 		},
+		"token": &graphql.Field{
+			Type: graphql.String,
+		},
 		"days": &graphql.Field{
 			Type: graphql.NewList(graphql.String),
 		},

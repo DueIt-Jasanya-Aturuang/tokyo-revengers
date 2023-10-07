@@ -5,7 +5,7 @@ import (
 )
 
 var UserType = graphql.NewObject(graphql.ObjectConfig{
-	Name: "User",
+	Name: "UserType",
 	Fields: graphql.Fields{
 		"id":           &graphql.Field{Type: graphql.Int},
 		"full_name":    &graphql.Field{Type: graphql.String},

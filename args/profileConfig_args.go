@@ -12,7 +12,7 @@ const (
 )
 
 var ProfileConfigEnum = graphql.NewEnum(graphql.EnumConfig{
-	Name: "ProfileConfigInputtest",
+	Name: "ProfileConfigEnum",
 	Values: graphql.EnumValueConfigMap{
 		"MONTHLY_PERIOD": &graphql.EnumValueConfig{
 			Value: "MONTHLY_PERIOD",

@@ -6,21 +6,24 @@ import (
 	"github.com/graphql-go/graphql"
 	"github.com/jasanya-tech/jasanya-response-backend-golang/response"
 
+	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/args"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/repository"
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/types"
 )
 
-func GetProfile(profileRepo *repository.AccountRepositoryImpl) *graphql.Field {
+func GetPayment(account *repository.FinanceRepositoryImpl) *graphql.Field {
 	return &graphql.Field{
-		Type: types.Response(types.ProfileType, "profileResponse"),
+		Type: types.Response(types.PaymentType, "PaymentResponse"),
+		Args: args.InfiniteScroll,
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			header := p.Context.Value("headers").(http.Header)
-			resp, err := profileRepo.GetProfile(&repository.Header{
+
+			resp, err := account.GetPayment(&repository.Header{
 				Authorization: header.Get("Authorization"),
 				AppID:         header.Get("App-ID"),
 				UserID:        header.Get("User-ID"),
 				ProfileID:     header.Get("Profile-ID"),
-			})
+			}, p.Args["order"].(string), p.Args["cursor"].(string))
 
 			if err != nil {
 				httpResp := response.HttpResponse{

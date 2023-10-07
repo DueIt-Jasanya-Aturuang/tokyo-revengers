@@ -11,9 +11,35 @@ import (
 	"github.com/DueIt-Jasanya-Aturuang/tokyo-revengers/types"
 )
 
+func GetProfile(profileRepo *repository.AccountRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.ProfileType, "ProfileResponse"),
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+			resp, err := profileRepo.GetProfile(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			})
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
+
 func GetProfileConfig(account *repository.AccountRepositoryImpl) *graphql.Field {
 	return &graphql.Field{
-		Name: "ProfileConfig",
 		Type: types.Response(types.ProfileConfigType, "ProfileConfigResponse"),
 		Args: graphql.FieldConfigArgument{
 			"config_name": &graphql.ArgumentConfig{
@@ -43,7 +69,6 @@ func GetProfileConfig(account *repository.AccountRepositoryImpl) *graphql.Field 
 			}
 
 			return resp, nil
-			return nil, nil
 		},
 	}
 }

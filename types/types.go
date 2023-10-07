@@ -21,7 +21,7 @@ func Response(output graphql.Output, name string) *graphql.Object {
 			},
 			"errors": &graphql.Field{
 				Type: graphql.NewScalar(graphql.ScalarConfig{
-					Name:        "error_" + name, // Atur nama tipe data skalar sesuai kebutuhan Anda
+					Name:        "Error" + name,
 					Description: "selain 400 ini return nya string, kalo 400 return map[string][]string",
 					Serialize: func(value interface{}) interface{} {
 						return value

@@ -50,8 +50,8 @@ func main() {
 		// 	return
 		// }
 
-		ctx := context.WithValue(r.Context(), "headers", r.Header)
-		r = r.WithContext(ctx)
+		ctxHeaders := context.WithValue(r.Context(), "headers", r.Header)
+		r = r.WithContext(ctxHeaders)
 
 		w.Header().Set("Authorization", r.Header.Get("Authorization"))
 
