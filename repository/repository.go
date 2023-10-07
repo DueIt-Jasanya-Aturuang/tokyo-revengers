@@ -42,6 +42,6 @@ func FetchResponse(r *http.Response) map[string]any {
 		log.Warn().Msgf(util.LogErrDecode, r.Body, err)
 		return ResponseGateway
 	}
-
+	
 	return resMap
 }
