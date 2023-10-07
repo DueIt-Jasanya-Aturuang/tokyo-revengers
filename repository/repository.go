@@ -17,14 +17,14 @@ type Header struct {
 	ProfileID     string
 }
 type AllServiceRepoImpl struct {
-	Profile *AccountRepositoryImpl
+	Account *AccountRepositoryImpl
 	User    *AuthRepositoryImpl
 	Finance *FinanceRepositoryImpl
 }
 
 func NewAllServiceRepoImpl() *AllServiceRepoImpl {
 	return &AllServiceRepoImpl{
-		Profile: &AccountRepositoryImpl{},
+		Account: &AccountRepositoryImpl{},
 		User:    &AuthRepositoryImpl{},
 		Finance: &FinanceRepositoryImpl{},
 	}

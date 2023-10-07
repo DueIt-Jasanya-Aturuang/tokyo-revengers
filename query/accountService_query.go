@@ -72,3 +72,68 @@ func GetProfileConfig(account *repository.AccountRepositoryImpl) *graphql.Field 
 		},
 	}
 }
+
+func GetNotification(account *repository.AccountRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.NotificationType, "NotificationResponse"),
+		Args: graphql.FieldConfigArgument{
+			"order":  args.OrderInfiniteScroll,
+			"cursor": args.CursorInfiniteScroll,
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+
+			resp, err := account.GetNotification(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			}, p.Args["order"].(string), p.Args["cursor"].(string))
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
+
+func GetDetailNotification(account *repository.AccountRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.NotificationTypeList, "NotificationListResponse"),
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+
+			resp, err := account.GetDetailNotification(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			}, p.Args["id"].(string))
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
