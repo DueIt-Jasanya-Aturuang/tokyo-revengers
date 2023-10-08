@@ -16,6 +16,14 @@ type Header struct {
 	UserID        string
 	ProfileID     string
 }
+
+type QueryParam struct {
+	Order     string
+	Cursor    string
+	StartTime string
+	EndTime   string
+	Type      string
+}
 type AllServiceRepoImpl struct {
 	Account *AccountRepositoryImpl
 	User    *AuthRepositoryImpl
