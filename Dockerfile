@@ -1,4 +1,21 @@
-FROM ubuntu:latest
-LABEL authors="ibanrama"
+FROM go:1.21 as build
 
-ENTRYPOINT ["top", "-b"]
+ENV CGO_ENABLED=0
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o gql .
+
+FROM alpine:latest AS final
+
+WORKDIR /app
+
+COPY --from=build /app/gql .
+
+CMD ["./gql"]
