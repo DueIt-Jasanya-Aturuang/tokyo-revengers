@@ -37,7 +37,7 @@ func main() {
 		Schema: &schema,
 	})
 
-	http.Handle("/page", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/gql", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("X-Api-Key") != infra.Key {
 			httpResp := response.HttpResponse{
 				Status:  response.CM05,

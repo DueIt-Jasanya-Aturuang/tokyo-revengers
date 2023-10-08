@@ -4,8 +4,8 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-var IncomeHistoryType = graphql.NewObject(graphql.ObjectConfig{
-	Name: "IncomeHistoryType",
+var SpendingHistoryType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "SpendingHistoryType",
 	Fields: graphql.Fields{
 		"id": &graphql.Field{
 			Type: graphql.String,
@@ -13,10 +13,10 @@ var IncomeHistoryType = graphql.NewObject(graphql.ObjectConfig{
 		"profile_id": &graphql.Field{
 			Type: graphql.String,
 		},
-		"income_type_id": &graphql.Field{
+		"spending_type_id": &graphql.Field{
 			Type: graphql.String,
 		},
-		"income_type_title": &graphql.Field{
+		"spending_type_title": &graphql.Field{
 			Type: graphql.String,
 		},
 		"payment_method_id": &graphql.Field{
@@ -28,29 +28,35 @@ var IncomeHistoryType = graphql.NewObject(graphql.ObjectConfig{
 		"payment_name": &graphql.Field{
 			Type: graphql.String,
 		},
-		"income_amount": &graphql.Field{
+		"before_balance": &graphql.Field{
 			Type: graphql.Int,
 		},
-		"format_income_amount": &graphql.Field{
+		"spending_amount": &graphql.Field{
+			Type: graphql.Int,
+		},
+		"format_spending_amount": &graphql.Field{
 			Type: graphql.String,
+		},
+		"after_balance": &graphql.Field{
+			Type: graphql.Int,
 		},
 		"description": &graphql.Field{
 			Type: graphql.String,
 		},
-		"time_income_history": &graphql.Field{
+		"time_spending_history": &graphql.Field{
 			Type: graphql.String,
 		},
-		"show_time_income_history": &graphql.Field{
+		"show_time_spending_history": &graphql.Field{
 			Type: graphql.String,
 		},
 	},
 })
 
-var IncomeHistoryTypeList = graphql.NewObject(graphql.ObjectConfig{
-	Name: "IncomeHistoryTypeList",
+var SpendingHistoryTypeList = graphql.NewObject(graphql.ObjectConfig{
+	Name: "SpendingHistoryTypeList",
 	Fields: graphql.Fields{
-		"income_history": &graphql.Field{
-			Type: graphql.NewList(IncomeHistoryType),
+		"spending_history": &graphql.Field{
+			Type: graphql.NewList(SpendingHistoryType),
 		},
 		"cursor": &graphql.Field{
 			Type: graphql.String,

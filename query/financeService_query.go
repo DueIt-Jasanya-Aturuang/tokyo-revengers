@@ -289,3 +289,80 @@ func GetDetailIncomeHistory(finance *repository.FinanceRepositoryImpl) *graphql.
 		},
 	}
 }
+
+func GetSpendingHistory(finance *repository.FinanceRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.SpendingHistoryTypeList, "SpendingHistoryTypeListResponse"),
+		Args: graphql.FieldConfigArgument{
+			"order":  args.OrderInfiniteScroll,
+			"cursor": args.CursorInfiniteScroll,
+			"start":  args.StartTimeParam,
+			"end":    args.EndTimeParam,
+			"type": &graphql.ArgumentConfig{
+				Type:         args.TypeParam,
+				DefaultValue: "",
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+
+			resp, err := finance.GetSpendingHistory(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			}, &repository.QueryParam{
+				Order:     p.Args["order"].(string),
+				Cursor:    p.Args["cursor"].(string),
+				StartTime: p.Args["start"].(string),
+				EndTime:   p.Args["end"].(string),
+				Type:      p.Args["type"].(string),
+			})
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
+
+func GetDetailSpendingHistory(finance *repository.FinanceRepositoryImpl) *graphql.Field {
+	return &graphql.Field{
+		Type: types.Response(types.SpendingHistoryType, "SpendingHistoryTypeResponse"),
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			header := p.Context.Value("headers").(http.Header)
+
+			resp, err := finance.GetDetailSpendingHistory(&repository.Header{
+				Authorization: header.Get("Authorization"),
+				AppID:         header.Get("App-ID"),
+				UserID:        header.Get("User-ID"),
+				ProfileID:     header.Get("Profile-ID"),
+			}, p.Args["id"].(string))
+
+			if err != nil {
+				httpResp := response.HttpResponse{
+					Status:  response.CM99,
+					Message: "internal server error",
+					Errors:  err.Error(),
+					Data:    nil,
+				}
+				return httpResp, nil
+			}
+
+			return resp, nil
+		},
+	}
+}
